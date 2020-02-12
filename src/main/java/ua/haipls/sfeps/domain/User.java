@@ -50,5 +50,5 @@ public class User extends  BaseEntity{
 
     @NotBlank
     @ManyToMany
-    private Set<Service> services;
+    private Set<Organization> organizations;
 }

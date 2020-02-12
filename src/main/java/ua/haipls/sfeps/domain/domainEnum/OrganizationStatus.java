@@ -1,5 +1,6 @@
 package ua.haipls.sfeps.domain.domainEnum;
 
-public enum ServiceStatus {
+public enum OrganizationStatus
+{
     ACTIVATED,DEACTIVATED,REGISTRATED
 }

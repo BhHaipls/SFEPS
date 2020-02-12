@@ -41,7 +41,7 @@ public class Event extends BaseEntity {
 
     @NotBlank
     @ManyToMany
-    private Set<Service> services;
+    private Set<Organization> services;
 
 
     @OneToMany(mappedBy = "event",orphanRemoval = true)

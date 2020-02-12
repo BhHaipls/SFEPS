@@ -2,7 +2,7 @@ package ua.haipls.sfeps.domain;
 
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import ua.haipls.sfeps.domain.domainEnum.ServiceStatus;
+import ua.haipls.sfeps.domain.domainEnum.OrganizationStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @SuperBuilder
-public class Service extends BaseEntity {
+public class Organization extends BaseEntity {
 
     @NotBlank
     @Column(length = 100)
@@ -31,10 +31,10 @@ public class Service extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 30)
-    private ServiceStatus serviceStatus;
+    private OrganizationStatus organizationStatus;
 
     @ManyToOne
-    private ServiceType serviceType;
+    private OrganizationType organizationType;
 
 
     @ManyToMany(mappedBy = "services")

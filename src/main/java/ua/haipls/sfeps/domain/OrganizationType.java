@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @SuperBuilder
 @Entity
-public class ServiceType extends BaseEntity {
+public class OrganizationType extends BaseEntity {
 
     @Column(length = 48,unique = true)
     @NotBlank
@@ -22,7 +22,7 @@ public class ServiceType extends BaseEntity {
     @NotBlank
     private int priority;
 
-    @OneToMany(mappedBy = "serviceType")
-    private Set<Service> services;
+    @OneToMany(mappedBy = "organizationType")
+    private Set<Organization> organizations;
 
 }
