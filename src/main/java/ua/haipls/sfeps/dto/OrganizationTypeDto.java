@@ -1,4 +1,11 @@
 package ua.haipls.sfeps.dto;
 
-public class OrganizationTypeDto {
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@SuperBuilder
+public class OrganizationTypeDto  extends BaseDto{
+
+
 }

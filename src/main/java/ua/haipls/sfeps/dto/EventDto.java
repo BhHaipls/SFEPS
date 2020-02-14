@@ -1,4 +1,11 @@
 package ua.haipls.sfeps.dto;
 
-public class EventDto {
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@SuperBuilder
+public class EventDto  extends BaseDto{
+
+
 }

@@ -1,6 +1,7 @@
 package ua.haipls.sfeps.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.haipls.sfeps.domain.Role;
 import ua.haipls.sfeps.domain.User;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;

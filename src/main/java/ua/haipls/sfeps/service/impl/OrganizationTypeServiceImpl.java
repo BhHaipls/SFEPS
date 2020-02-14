@@ -1,35 +1,75 @@
 package ua.haipls.sfeps.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.haipls.sfeps.domain.Organization;
+import ua.haipls.sfeps.domain.OrganizationType;
 import ua.haipls.sfeps.dto.OrganizationTypeDto;
+import ua.haipls.sfeps.dto.mapper.OrganizationTypeMapper;
+import ua.haipls.sfeps.repositoriy.OrganizationTypeRepository;
 import ua.haipls.sfeps.service.OrganizationTypeService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class OrganizationTypeServiceImpl implements OrganizationTypeService {
+
+    private  final OrganizationTypeMapper organizationTypeMapper;
+    private final OrganizationTypeRepository organizationTypeRepository;
+
+    @Autowired
+    public OrganizationTypeServiceImpl(OrganizationTypeMapper organizationTypeMapper, OrganizationTypeRepository organizationTypeRepository) {
+        this.organizationTypeMapper = organizationTypeMapper;
+        this.organizationTypeRepository = organizationTypeRepository;
+    }
+
     @Override
     public OrganizationTypeDto create(OrganizationTypeDto organizationTypeDto) {
-        return null;
+        OrganizationType user = organizationTypeRepository.save(organizationTypeMapper.toEntity(organizationTypeDto));
+        OrganizationTypeDto result = organizationTypeMapper.toDto(user);
+
+        log.info("IN create - organization type: {} successfully created", result);
+
+        return result;
     }
 
     @Override
     public OrganizationTypeDto update(OrganizationTypeDto organizationTypeDto) {
-        return null;
+        findById(organizationTypeDto.getId());
+        OrganizationType user = organizationTypeRepository.save(organizationTypeMapper.toEntity(organizationTypeDto));
+        OrganizationTypeDto result = organizationTypeMapper.toDto(user);
+
+        log.info("IN update - organization type: {} successfully updated", result);
+
+        return result;
     }
 
     @Override
     public Collection<OrganizationTypeDto> findAll() {
-        return null;
+        Collection<OrganizationTypeDto> result = ((Collection<OrganizationType>) organizationTypeRepository.findAll())
+                .stream()
+                .map(organizationTypeMapper::toDto)
+                .collect(Collectors.toList());
+        log.info("IN findAll - {} organization type found", result.size());
+        return result;
     }
 
     @Override
     public OrganizationTypeDto findById(Long id) {
-        return null;
+        OrganizationTypeDto result = organizationTypeMapper.toDto(organizationTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Organization type not found by id: " + id)));
+        log.info("IN findById - organization type: {} found by id: {}", result, id);
+        return result;
     }
 
     @Override
     public void deleteById(Long id) {
-
+        findById(id);
+        organizationTypeRepository.deleteById(id);
+        log.info("IN deleteById - organization type with id: {} successfully deleted", id);
     }
 }

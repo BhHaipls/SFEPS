@@ -6,12 +6,15 @@ import org.springframework.stereotype.Repository;
 import ua.haipls.sfeps.domain.Event;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 @Repository
-public interface EventRepository extends PagingAndSortingRepository<Event,Long> {
-    List<Event> findAllByAuthorId(Long id);
-    List<Event> findAllByImportantId(Long id);
-    List<Event> findAllByStatus(String status);
-    List<Event> findAllByDateBetween(LocalDateTime start,LocalDateTime end);
+public interface EventRepository extends PagingAndSortingRepository<Event, Long> {
+    Collection<Event> findAllByAuthorId(Long id);
+
+    Collection<Event> findAllByImportantId(Long id);
+
+    Collection<Event> findAllByStatus(String status);
+
+    Collection<Event> findAllByDateBetween(LocalDateTime start, LocalDateTime end);
 }
