@@ -1,7 +1,7 @@
 package ua.haipls.sfeps.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.haipls.sfeps.domain.Event;
 import ua.haipls.sfeps.dto.EventDto;
@@ -16,16 +16,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
 
-    @Autowired
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper) {
-        this.eventRepository = eventRepository;
-        this.eventMapper = eventMapper;
-    }
 
     @Override
     public EventDto create(EventDto eventDto) {
@@ -86,7 +82,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public Collection<EventDto> findAllByImportantId(Long id) {
 
-        Collection<EventDto> result =  eventRepository.findAllByImportantId(id)
+        Collection<EventDto> result = eventRepository.findAllByImportantId(id)
                 .stream()
                 .map(eventMapper::toDto)
                 .collect(Collectors.toList());

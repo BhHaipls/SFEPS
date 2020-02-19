@@ -1,9 +1,8 @@
 package ua.haipls.sfeps.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.haipls.sfeps.domain.Organization;
 import ua.haipls.sfeps.domain.OrganizationType;
 import ua.haipls.sfeps.dto.OrganizationTypeDto;
 import ua.haipls.sfeps.dto.mapper.OrganizationTypeMapper;
@@ -16,16 +15,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class OrganizationTypeServiceImpl implements OrganizationTypeService {
 
-    private  final OrganizationTypeMapper organizationTypeMapper;
+    private final OrganizationTypeMapper organizationTypeMapper;
     private final OrganizationTypeRepository organizationTypeRepository;
 
-    @Autowired
-    public OrganizationTypeServiceImpl(OrganizationTypeMapper organizationTypeMapper, OrganizationTypeRepository organizationTypeRepository) {
-        this.organizationTypeMapper = organizationTypeMapper;
-        this.organizationTypeRepository = organizationTypeRepository;
-    }
 
     @Override
     public OrganizationTypeDto create(OrganizationTypeDto organizationTypeDto) {

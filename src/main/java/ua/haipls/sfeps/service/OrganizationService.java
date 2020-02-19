@@ -14,7 +14,7 @@ public interface OrganizationService {
 
     Collection<OrganizationDto> findAllByAuthorId(Long id);
 
-    Collection<OrganizationDto> findAllByServiceTypeId(Long id);
+    Collection<OrganizationDto> findAllByOrganizationTypeId(Long id);
 
     OrganizationDto findById(Long id);
 

@@ -1,6 +1,7 @@
 package ua.haipls.sfeps.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import ua.haipls.sfeps.domain.domainEnum.OrganizationStatus;
 
@@ -11,21 +12,18 @@ import java.util.Set;
 @Data
 @Entity
 @SuperBuilder
+@NoArgsConstructor
 public class Organization extends BaseEntity {
 
-    @NotBlank
-    @Column(length = 100)
+    @Column(length = 200)
     private String name;
 
-    @NotBlank
     @Column(length = 1024)
     private String description;
 
     @ManyToOne
-    @NotBlank
     private User author;
 
-    @NotBlank
     @Column
     private int rating;
 
@@ -37,12 +35,11 @@ public class Organization extends BaseEntity {
     private OrganizationType organizationType;
 
 
-    @ManyToMany(mappedBy = "services")
+    @ManyToMany(mappedBy = "organizations")
     private Set<User> dispatchers;
 
 
-    @NotBlank
-    @ManyToMany(mappedBy = "services")
+    @ManyToMany(mappedBy = "organizations")
     private Set<Event> events;
 
 }

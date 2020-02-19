@@ -1,7 +1,7 @@
 package ua.haipls.sfeps.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.haipls.sfeps.domain.ImportantEvent;
 import ua.haipls.sfeps.dto.ImportantEventDto;
@@ -15,16 +15,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ImportantEventServiceImpl implements ImportantEventService {
 
     private final ImportantEventRepository importantEventRepository;
     private final ImportantEventMapper importantEventMapper;
 
-    @Autowired
-    public ImportantEventServiceImpl(ImportantEventRepository importantEventRepository, ImportantEventMapper importantEventMapper) {
-        this.importantEventRepository = importantEventRepository;
-        this.importantEventMapper = importantEventMapper;
-    }
 
     @Override
     public ImportantEventDto create(ImportantEventDto importantEventDto) {

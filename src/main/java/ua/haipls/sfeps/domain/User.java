@@ -2,6 +2,7 @@ package ua.haipls.sfeps.domain;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import ua.haipls.sfeps.domain.domainEnum.UserStatus;
 
@@ -9,11 +10,13 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @SuperBuilder
 @Entity
+@NoArgsConstructor
 public class User extends  BaseEntity{
 
     @Column(name = "first_name",length = 30)
@@ -25,12 +28,10 @@ public class User extends  BaseEntity{
     @Column(name = "date_birth")
     private LocalDate dateBirth;
 
-    @NotBlank
     @Column(updatable = false, unique=true,length = 50)
     @Email
     private String email;
 
-    @NotBlank
     @Column(length = 256)
     private String address;
 
@@ -38,17 +39,16 @@ public class User extends  BaseEntity{
     @Column(name = "status",length = 30)
     private UserStatus status;
 
-    @NotBlank
-    @Transient
-    @Column(name="password", length = 32)
+    @Column(name="password", length = 256)
     private String password;
 
-    @NotBlank
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_has_roles",
+            joinColumns = {@JoinColumn(name = "user", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role", referencedColumnName = "id")})
     private Set<Role> roles;
 
-
-    @NotBlank
     @ManyToMany
     private Set<Organization> organizations;
 }

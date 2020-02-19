@@ -1,6 +1,8 @@
 package ua.haipls.sfeps.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.haipls.sfeps.domain.Comment;
 import ua.haipls.sfeps.dto.CommentDto;
@@ -14,15 +16,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
 
-    public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper) {
-        this.commentRepository = commentRepository;
-        this.commentMapper = commentMapper;
-    }
 
     @Override
     public CommentDto create(CommentDto commentDto) {

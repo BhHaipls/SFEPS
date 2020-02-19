@@ -1,20 +1,20 @@
 package ua.haipls.sfeps.service;
 
-import ua.haipls.sfeps.domain.Role;
+import ua.haipls.sfeps.dto.RoleDto;
 
 import java.util.Collection;
 
 public interface RoleService {
 
-    Role create(Role role);
+    RoleDto create(RoleDto roleDto);
 
-    Role update(Role role);
+    RoleDto update(RoleDto roleDto);
 
-    Collection<Role> findAll();
+    Collection<RoleDto> findAll();
 
-    Role findById(Long id);
+    RoleDto findById(Long id);
 
-    Role findByName(String name);
+    RoleDto findByName(String name);
 
     void deleteById(Long id);
 }

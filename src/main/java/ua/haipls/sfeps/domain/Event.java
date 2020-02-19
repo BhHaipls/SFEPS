@@ -1,28 +1,30 @@
 package ua.haipls.sfeps.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import ua.haipls.sfeps.domain.domainEnum.EventStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
 @SuperBuilder
 @Entity
+@NoArgsConstructor
 public class Event extends BaseEntity {
     @Column(length = 90)
     private String name;
 
-    @Column(length = 512)
+    @Column(length = 2054)
     private String description;
 
     @Column
-    private LocalDate date;
+    private LocalDateTime date;
 
-    @NotBlank
     @Column(length = 256)
     private String address;
 
@@ -31,21 +33,16 @@ public class Event extends BaseEntity {
     private EventStatus status;
 
     @ManyToOne
-    @NotBlank
     private ImportantEvent important;
 
     @ManyToOne
-    @NotBlank
     private User author;
 
-
-    @NotBlank
     @ManyToMany
-    private Set<Organization> services;
+    private Set<Organization> organizations;
 
 
     @OneToMany(mappedBy = "event",orphanRemoval = true)
-    @NotBlank
     private Set<Comment> comments;
 
 }

@@ -1,6 +1,7 @@
 package ua.haipls.sfeps.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -12,9 +13,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @SuperBuilder
 @Entity
+@NoArgsConstructor
 public class Comment extends BaseEntity {
 
-    @NotBlank
     @Column(length = 1024)
     private String text;
 
@@ -27,7 +28,6 @@ public class Comment extends BaseEntity {
 
 
     @ManyToOne
-    @NotBlank
     private Event event;
 
 }

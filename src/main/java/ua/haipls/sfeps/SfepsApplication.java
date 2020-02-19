@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan("ua.haipls.sfeps.domain")
+@EntityScan("ua.haipls.sfeps")
 public class SfepsApplication {
 
     public static void main(String[] args) {

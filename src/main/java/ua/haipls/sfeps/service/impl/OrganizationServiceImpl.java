@@ -1,5 +1,6 @@
 package ua.haipls.sfeps.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class OrganizationServiceImpl implements OrganizationService {
 
     private final OrganizationRepository organizationRepository;
     private final OrganizationMapper organizationMapper;
 
-    @Autowired
-    public OrganizationServiceImpl(OrganizationRepository organizationRepository, OrganizationMapper organizationMapper) {
-        this.organizationRepository = organizationRepository;
-        this.organizationMapper = organizationMapper;
-    }
+
 
     @Override
     public OrganizationDto create(OrganizationDto organizationDto) {
@@ -70,8 +68,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public Collection<OrganizationDto> findAllByServiceTypeId(Long id) {
-        Collection<OrganizationDto> result = organizationRepository.findAllByServiceTypeId(id)
+    public Collection<OrganizationDto> findAllByOrganizationTypeId(Long id) {
+        Collection<OrganizationDto> result = organizationRepository.findAllByOrganizationTypeId(id)
                 .stream()
                 .map(organizationMapper::toDto)
                 .collect(Collectors.toList());

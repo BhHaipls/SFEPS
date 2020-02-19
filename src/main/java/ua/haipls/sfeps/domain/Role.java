@@ -1,6 +1,8 @@
 package ua.haipls.sfeps.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,13 +12,12 @@ import java.util.Set;
 
 @Data
 @Entity
+@SuperBuilder
+@NoArgsConstructor
 public class Role extends BaseEntity {
 
-    @NotBlank
     @Column(length = 20,unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 
 }

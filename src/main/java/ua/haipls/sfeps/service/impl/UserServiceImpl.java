@@ -1,12 +1,15 @@
 package ua.haipls.sfeps.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.haipls.sfeps.domain.Role;
 import ua.haipls.sfeps.domain.User;
 import ua.haipls.sfeps.domain.domainEnum.UserStatus;
+import ua.haipls.sfeps.dto.RoleDto;
 import ua.haipls.sfeps.dto.UserDto;
+import ua.haipls.sfeps.dto.mapper.RoleMapper;
 import ua.haipls.sfeps.dto.mapper.UserMapper;
 import ua.haipls.sfeps.repositoriy.RoleRepository;
 import ua.haipls.sfeps.repositoriy.UserRepository;
@@ -19,26 +22,23 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
     private final RoleRepository roleRepository;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.roleRepository = roleRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto create(UserDto userDto) {
-        Role roleUser = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new EntityNotFoundException("Role not found by name: "));
-
-        userDto.setRoles(Collections.singleton(roleUser));
-        userDto.setStatus(UserStatus.NOT_ACTIVED);
+        Role roleUser = roleRepository.findByName("USER").orElseThrow(() -> new EntityNotFoundException("Role not found by name: "));
+        RoleDto roleDto = roleMapper.toDto(roleUser);
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userDto.setRoles(Collections.singleton(roleDto));
+        userDto.setStatus(UserStatus.ACTIVATED);
 
         User user = userRepository.save(userMapper.toEntity(userDto));
         UserDto result = userMapper.toDto(user);
