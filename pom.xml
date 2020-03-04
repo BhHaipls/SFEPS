@@ -12,6 +12,7 @@
     <artifactId>sfeps</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sfeps</name>
+    <packaging>jar</packaging>
     <description>service for event processing and statistics on REST</description>
 
     <properties>

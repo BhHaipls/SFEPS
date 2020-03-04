@@ -37,6 +37,8 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
         claims.put("roles", rolesName);
+        claims.put("firstName", user.getFirstName());
+        claims.put("secondName", user.getSecondName());
         return TOKEN_PREFIX + Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date())
@@ -56,6 +58,8 @@ public class JwtTokenProvider {
             return UserPrincipal.builder()
                     .id(body.get("id", Long.class))
                     .email(body.getSubject())
+                    .firstName((String) body.get("firstName"))
+                    .secondName((String) body.get("lastName"))
                     .password("")
                     .authorities(AuthorityUtils.commaSeparatedStringToAuthorityList((String) body.get("roles")))
                     .build();

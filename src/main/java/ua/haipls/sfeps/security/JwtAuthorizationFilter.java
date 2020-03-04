@@ -1,5 +1,6 @@
 package ua.haipls.sfeps.security;
 
+import lombok.SneakyThrows;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,10 +32,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         this.messageSource = messageSource;
     }
 
+    @SneakyThrows
     @Override
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
-                                    FilterChain chain) throws IOException, ServletException {
+                                    FilterChain chain){
         String token = req.getHeader(HEADER_NAME);
         if (token == null || !token.startsWith(TOKEN_PREFIX)) {
             res.sendError(HttpServletResponse.SC_FORBIDDEN,

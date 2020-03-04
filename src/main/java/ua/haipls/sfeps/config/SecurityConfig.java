@@ -2,19 +2,20 @@ package ua.haipls.sfeps.config;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.SneakyThrows;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ua.haipls.sfeps.security.JwtAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ua.haipls.sfeps.security.JwtAuthorizationFilter;
 import ua.haipls.sfeps.security.JwtTokenProvider;
 
@@ -41,22 +42,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtTokenProvider();
     }
 
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter authenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider());
-        authenticationFilter.setRequiresAuthenticationRequestMatcher(
-                new AntPathRequestMatcher("/auth/login", "POST"));
-        authenticationFilter.setAuthenticationManager(authenticationManagerBean());
-        return authenticationFilter;
-    }
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    @SneakyThrows
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) {
         http
                 .antMatcher("/api/**")
                 .httpBasic().disable()
@@ -64,10 +58,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(jwtAuthenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManagerBean(), jwtTokenProvider(), messageSource));
     }
+
+    @Bean
+    @SneakyThrows
+    @Override
+    public AuthenticationManager authenticationManagerBean() {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(WHITELIST);
+    }
+
 }

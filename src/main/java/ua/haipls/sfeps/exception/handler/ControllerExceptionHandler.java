@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -61,6 +62,18 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
     }
 
+    @ExceptionHandler({BadCredentialsException.class})
+    public ResponseEntity<ApiError> handleBadCredentialsException(BadCredentialsException ex, Locale locale) {
+        String errorMessage = messageSource.getMessage(ex.getMessage(), null, locale);
+
+        ApiError apiError = ApiError.builder()
+                .message(errorMessage)
+                .status(HttpStatus.UNAUTHORIZED)
+                .errors(Collections.singletonList(errorMessage))
+                .build();
+        log.error("Bad credentials, thrown:", ex);
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
     /*
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
