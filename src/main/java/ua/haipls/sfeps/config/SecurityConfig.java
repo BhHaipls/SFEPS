@@ -27,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public final static String TOKEN_PREFIX = "Bearer ";
     public final static String HEADER_NAME = "Authorization";
-    private static final String[] WHITELIST = {"/auth/login", "/v2/api-docs",
+    private static final String[] WHITELIST = {"/auth/login", "auth/registretion",
+            "/v2/api-docs",
             "/swagger-resources/configuration/ui",
             "/configuration/ui",
             "/swagger-resources",

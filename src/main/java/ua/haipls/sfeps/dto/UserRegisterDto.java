@@ -4,21 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import ua.haipls.sfeps.domain.Role;
-import ua.haipls.sfeps.domain.domainEnum.UserStatus;
 import ua.haipls.sfeps.dto.transfer.OnCreate;
 import ua.haipls.sfeps.dto.transfer.OnUpdate;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @SuperBuilder
 @NoArgsConstructor
-public class UserDto extends BaseDto {
-
+public class UserRegisterDto {
     @NotNull(groups = {OnCreate.class, OnUpdate.class},
             message = "{userDto.firstName.notnull}")
     @Pattern(groups = {OnCreate.class, OnUpdate.class},
@@ -43,10 +38,6 @@ public class UserDto extends BaseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateBirth;
 
-    @NotEmpty(groups = {OnUpdate.class}, message = "{userDto.roles.notempty}")
-    private Set<RoleDto> roles;
-
-    private UserStatus status;
 
     @NotNull(groups = {OnCreate.class, OnUpdate.class},
             message = "{userDto.address.notnull}")
@@ -61,7 +52,5 @@ public class UserDto extends BaseDto {
             min = 8, max = 32,
             message = "{userDto.password.size}")
     private String password;
-
-
 
 }

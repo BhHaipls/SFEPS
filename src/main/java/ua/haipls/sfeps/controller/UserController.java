@@ -14,7 +14,6 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/users")
-@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -27,7 +26,6 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto create(@Validated(OnCreate.class) @RequestBody UserDto userDto) {
-        log.info(" {}",userDto);
         return userService.create(userDto);
     }
 
