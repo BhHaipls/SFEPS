@@ -13,7 +13,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/api/events/types")
+@RequestMapping("/events/types")
 @RequiredArgsConstructor
 public class ImportantEventController {
 

@@ -12,7 +12,7 @@ import ua.haipls.sfeps.service.CommentService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/comments")
 @RequiredArgsConstructor
 public class CommentController {
 

@@ -10,7 +10,7 @@ import ua.haipls.sfeps.dto.UserRegisterDto;
 import ua.haipls.sfeps.service.RegistrationService;
 
 @RestController
-@RequestMapping("/auth/registretion")
+@RequestMapping("/auth/registration")
 @RequiredArgsConstructor
 public class RegistrationEntryPointController {
 

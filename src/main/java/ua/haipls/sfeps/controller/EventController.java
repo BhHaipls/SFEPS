@@ -14,7 +14,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/api/events")
+@RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventController {
 

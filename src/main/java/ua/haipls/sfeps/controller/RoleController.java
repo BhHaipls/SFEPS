@@ -14,7 +14,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/api/users/roles")
+@RequestMapping("/users/roles")
 public class RoleController {
 
     private final RoleService roleService;

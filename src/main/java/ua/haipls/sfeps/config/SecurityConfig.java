@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public final static String TOKEN_PREFIX = "Bearer ";
     public final static String HEADER_NAME = "Authorization";
-    private static final String[] WHITELIST = {"/auth/login", "auth/registretion",
+    private static final String[] WHITELIST = {"/auth/login", "/auth/registration",
             "/v2/api-docs",
             "/swagger-resources/configuration/ui",
             "/configuration/ui",
@@ -49,20 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @SneakyThrows
-    @Override
-    protected void configure(HttpSecurity http) {
-        http
-                .antMatcher("/api/**")
-                .httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(new JwtAuthorizationFilter(authenticationManagerBean(), jwtTokenProvider(), messageSource));
-    }
+
 
     @Bean
     @SneakyThrows
@@ -71,12 +58,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("GET", "POST", "DELETE", "PUT")
+                        .allowCredentials(true);
             }
         };
     }
@@ -86,4 +78,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(WHITELIST);
     }
 
+    @SneakyThrows
+    @Override
+    protected void configure(HttpSecurity http) {
+        http
+                .antMatcher("/**")
+                .cors().and()
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(new JwtAuthorizationFilter(authenticationManagerBean(), jwtTokenProvider(), messageSource));
+    }
 }

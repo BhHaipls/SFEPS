@@ -12,7 +12,7 @@ import ua.haipls.sfeps.service.OrganizationService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/organizations")
+@RequestMapping("/organizations")
 @RequiredArgsConstructor
 public class OrganizationController {
 

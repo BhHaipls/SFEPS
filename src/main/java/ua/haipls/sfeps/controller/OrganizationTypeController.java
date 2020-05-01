@@ -12,7 +12,7 @@ import ua.haipls.sfeps.service.OrganizationTypeService;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/organizations/types")
+@RequestMapping("/organizations/types")
 @RequiredArgsConstructor
 public class OrganizationTypeController {
 
